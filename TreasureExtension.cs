@@ -14,12 +14,26 @@ namespace TreasureModel
 			{
 				throw new InvalidOperationException("Cannot compute median for an empty set.");
 			}
-
 			var sortedList = from treasure in source
-							 where treasure.Price > 12m
+							 orderby treasure.Price
 							 select treasure;
-			return sortedList.ToArray();
+			decimal sum = 0m;
+			ArrayList treasures = new ArrayList();
+			foreach (var item in sortedList)
+			{
+				sum += item.Price;
+				if (sum < 17m)
+				{
+					treasures.Add(item);
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			return treasures.Cast<Treasure>().ToArray();
 		}
-		
+
 	}
 }
